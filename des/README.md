@@ -81,9 +81,10 @@ Triple DES applies the Encrypt–Decrypt–Encrypt (EDE) structure using three i
 
 ## Key Features
 
-1. **Collapsible Responsive Sidebar Navigation:**
-   - Smooth desktop collapsible rail and mobile slide-out drawer.
-   - Links for Aim, Objectives, Theory, DES Algorithm, Double DES, Triple DES (3-Key), Flowchart, S-Box, Procedure, Test Cases, Quiz, and References.
+1. **Collapsible Responsive Sidebar Navigation & Layout:**
+   - Smooth desktop collapsible rail (68px / 256px) with tooltips and mobile slide-out drawer with overlay.
+   - Evenly spaced navigation items with prominent active section indicators.
+   - Refined header alignment, balanced card proportions, and zero horizontal page overflow.
    - Dynamic scrollspy active section highlighting.
 
 2. **Refined Objectives:**
