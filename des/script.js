@@ -834,18 +834,18 @@ function toggleSidebar() {
     const overlay = document.getElementById("sidebarOverlay");
     const collapseIcon = document.getElementById("collapseIcon");
 
-    if (window.innerWidth <= 900) {
-        // Mobile behavior: Drawer toggle
+    if (window.innerWidth < 768) {
+        // Mobile behavior: Drawer toggle with backdrop overlay
         const isOpen = sidebar.classList.contains("open");
         if (isOpen) {
             sidebar.classList.remove("open");
-            overlay.classList.remove("active");
+            if (overlay) overlay.classList.remove("active");
         } else {
             sidebar.classList.add("open");
-            overlay.classList.add("active");
+            if (overlay) overlay.classList.add("active");
         }
     } else {
-        // Desktop behavior: Collapse / Expand width
+        // Desktop & Tablet behavior: Toggle between expanded (250px) & collapsed (68px)
         const isCollapsed = sidebar.classList.contains("collapsed");
         if (isCollapsed) {
             sidebar.classList.remove("collapsed");
@@ -891,13 +891,29 @@ function setupScrollSpy() {
         }
     });
 
-    // Close mobile sidebar on nav link click
+    // Close mobile drawer when clicking a navigation link
     navLinks.forEach(link => {
         link.addEventListener("click", () => {
-            if (window.innerWidth <= 900) {
+            if (window.innerWidth < 768) {
                 closeSidebar();
             }
         });
+    });
+
+    // Window resize handler for responsive sidebar state consistency
+    window.addEventListener("resize", () => {
+        const sidebar = document.getElementById("sidebar");
+        const collapseIcon = document.getElementById("collapseIcon");
+        const overlay = document.getElementById("sidebarOverlay");
+
+        if (window.innerWidth >= 768) {
+            // Close mobile overlay if resizing up to tablet/desktop
+            if (sidebar) sidebar.classList.remove("open");
+            if (overlay) overlay.classList.remove("active");
+            if (collapseIcon) {
+                collapseIcon.textContent = sidebar.classList.contains("collapsed") ? "▶" : "◀";
+            }
+        }
     });
 }
 

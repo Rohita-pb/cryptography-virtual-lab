@@ -18,18 +18,19 @@
     <header class="top-header">
         <div class="header-left">
             <button class="sidebar-toggle-btn" id="sidebarToggleBtn" onclick="toggleSidebar()" aria-label="Toggle Navigation Sidebar">
-                ☰ <span class="toggle-text">Menu</span>
+                <span class="hamburger-icon">☰</span>
+                <span class="toggle-text">Menu</span>
             </button>
 
-            <div class="back-button" title="Back">←</div>
+            <button class="back-button" title="Back" aria-label="Go Back">←</button>
 
-            <div>
+            <div class="header-title-group">
                 <h1>Computer Science Lab Manual</h1>
                 <p>Cryptography & System Security • DES Virtual Laboratory</p>
             </div>
         </div>
 
-        <button class="share-button" onclick="shareExperiment()">
+        <button class="share-button" onclick="shareExperiment()" aria-label="Share Experiment">
             ↗ Share
         </button>
     </header>
@@ -44,25 +45,25 @@
         <aside class="sidebar" id="sidebar">
             <div class="sidebar-header">
                 <span class="sidebar-title">Lab Navigation</span>
-                <button class="sidebar-collapse-toggle" onclick="toggleSidebar()" title="Collapse / Expand Sidebar">
+                <button class="sidebar-collapse-toggle" id="sidebarCollapseBtn" onclick="toggleSidebar()" title="Collapse / Expand Sidebar" aria-label="Collapse / Expand Sidebar">
                     <span id="collapseIcon">◀</span>
                 </button>
             </div>
 
             <nav class="sidebar-menu">
                 <ul>
-                    <li><a href="#aim" class="nav-link"><span class="nav-num">01</span> Aim</a></li>
-                    <li><a href="#objectives" class="nav-link"><span class="nav-num">02</span> Objectives</a></li>
-                    <li><a href="#theory" class="nav-link"><span class="nav-num">03</span> Theory</a></li>
-                    <li><a href="#des-algorithm" class="nav-link"><span class="nav-num">04</span> DES Algorithm</a></li>
-                    <li><a href="#double-des" class="nav-link"><span class="nav-num">05</span> Double DES</a></li>
-                    <li><a href="#triple-des" class="nav-link"><span class="nav-num">06</span> Triple DES (3-Key)</a></li>
-                    <li><a href="#flowchart" class="nav-link"><span class="nav-num">07</span> Flowchart</a></li>
-                    <li><a href="#s-box" class="nav-link"><span class="nav-num">08</span> S-Box</a></li>
-                    <li><a href="#procedure" class="nav-link"><span class="nav-num">09</span> Procedure</a></li>
-                    <li><a href="#test-cases" class="nav-link"><span class="nav-num">10</span> Test Cases</a></li>
-                    <li><a href="#quiz" class="nav-link"><span class="nav-num">11</span> Quiz</a></li>
-                    <li><a href="#references" class="nav-link"><span class="nav-num">12</span> References</a></li>
+                    <li><a href="#aim" class="nav-link" data-tooltip="Aim"><span class="nav-num">01</span><span class="nav-text">Aim</span></a></li>
+                    <li><a href="#objectives" class="nav-link" data-tooltip="Objectives"><span class="nav-num">02</span><span class="nav-text">Objectives</span></a></li>
+                    <li><a href="#theory" class="nav-link" data-tooltip="Theory"><span class="nav-num">03</span><span class="nav-text">Theory</span></a></li>
+                    <li><a href="#des-algorithm" class="nav-link" data-tooltip="DES Algorithm"><span class="nav-num">04</span><span class="nav-text">DES Algorithm</span></a></li>
+                    <li><a href="#double-des" class="nav-link" data-tooltip="Double DES"><span class="nav-num">05</span><span class="nav-text">Double DES</span></a></li>
+                    <li><a href="#triple-des" class="nav-link" data-tooltip="Triple DES (3-Key)"><span class="nav-num">06</span><span class="nav-text">Triple DES (3-Key)</span></a></li>
+                    <li><a href="#flowchart" class="nav-link" data-tooltip="Flowchart"><span class="nav-num">07</span><span class="nav-text">Flowchart</span></a></li>
+                    <li><a href="#s-box" class="nav-link" data-tooltip="S-Box"><span class="nav-num">08</span><span class="nav-text">S-Box</span></a></li>
+                    <li><a href="#procedure" class="nav-link" data-tooltip="Procedure"><span class="nav-num">09</span><span class="nav-text">Procedure</span></a></li>
+                    <li><a href="#test-cases" class="nav-link" data-tooltip="Test Cases"><span class="nav-num">10</span><span class="nav-text">Test Cases</span></a></li>
+                    <li><a href="#quiz" class="nav-link" data-tooltip="Quiz"><span class="nav-num">11</span><span class="nav-text">Quiz</span></a></li>
+                    <li><a href="#references" class="nav-link" data-tooltip="References"><span class="nav-num">12</span><span class="nav-text">References</span></a></li>
                 </ul>
             </nav>
         </aside>
