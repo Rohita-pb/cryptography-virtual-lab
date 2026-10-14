@@ -59,11 +59,11 @@
                     <li><a href="#objectives" class="nav-link" data-tooltip="Objectives"><span class="nav-num">02</span><span class="nav-text">Objectives</span></a></li>
                     <li><a href="#theory" class="nav-link" data-tooltip="Theory"><span class="nav-num">03</span><span class="nav-text">Theory</span></a></li>
                     <li><a href="#des-algorithm" class="nav-link" data-tooltip="DES Algorithm"><span class="nav-num">04</span><span class="nav-text">DES Algorithm</span></a></li>
-                    <li><a href="#double-des" class="nav-link" data-tooltip="Double DES"><span class="nav-num">05</span><span class="nav-text">Double DES</span></a></li>
-                    <li><a href="#triple-des" class="nav-link" data-tooltip="Triple DES (3-Key)"><span class="nav-num">06</span><span class="nav-text">Triple DES (3-Key)</span></a></li>
-                    <li><a href="#flowchart" class="nav-link" data-tooltip="Flowchart"><span class="nav-num">07</span><span class="nav-text">Flowchart</span></a></li>
-                    <li><a href="#s-box" class="nav-link" data-tooltip="S-Box"><span class="nav-num">08</span><span class="nav-text">S-Box</span></a></li>
-                    <li><a href="#procedure" class="nav-link" data-tooltip="Procedure"><span class="nav-num">09</span><span class="nav-text">Procedure</span></a></li>
+                    <li><a href="#flowchart" class="nav-link" data-tooltip="Flowchart"><span class="nav-num">05</span><span class="nav-text">Flowchart</span></a></li>
+                    <li><a href="#s-box" class="nav-link" data-tooltip="S-Box"><span class="nav-num">06</span><span class="nav-text">S-Box</span></a></li>
+                    <li><a href="#procedure" class="nav-link" data-tooltip="Procedure"><span class="nav-num">07</span><span class="nav-text">Procedure</span></a></li>
+                    <li><a href="#double-des" class="nav-link" data-tooltip="Double DES"><span class="nav-num">08</span><span class="nav-text">Double DES</span></a></li>
+                    <li><a href="#triple-des" class="nav-link" data-tooltip="Triple DES (3-Key)"><span class="nav-num">09</span><span class="nav-text">Triple DES (3-Key)</span></a></li>
                     <li><a href="#test-cases" class="nav-link" data-tooltip="Test Cases"><span class="nav-num">10</span><span class="nav-text">Test Cases</span></a></li>
                     <li><a href="#quiz" class="nav-link" data-tooltip="Quiz"><span class="nav-num">11</span><span class="nav-text">Quiz</span></a></li>
                     <li><a href="#references" class="nav-link" data-tooltip="References"><span class="nav-num">12</span><span class="nav-text">References</span></a></li>
@@ -335,11 +335,383 @@
             </section>
 
 
+            <!-- THREE-KEY DES FLOWCHART -->
+            <section class="card" id="flowchart">
+                <div class="section-heading">
+                    <span>05</span>
+                    <h3>Three-Key DES Flowchart</h3>
+                </div>
+
+                <p class="section-subtext">
+                    The structural flowcharts below detail the sequential operations and intermediate block transformations
+                    of 3-Key Triple DES for both encryption and reverse decryption.
+                </p>
+
+                <div class="flowcharts-container">
+
+                    <!-- Encryption Flowchart -->
+                    <div class="flowchart-panel">
+                        <div class="flowchart-panel-header">
+                            <span class="flow-badge enc-bg">Encryption Sequence</span>
+                            <h4>Plaintext → E(K1) → D(K2) → E(K3) → Ciphertext</h4>
+                        </div>
+
+                        <div class="flowchart-visual">
+                            <div class="flow-block flow-terminal">
+                                <span class="flow-label">Plaintext</span>
+                                <span class="flow-symbol">P</span>
+                            </div>
+
+                            <div class="flow-arrow-down">
+                                <span class="arrow-glyph">↓</span>
+                            </div>
+
+                            <div class="flow-block flow-op flow-op-enc">
+                                <span class="op-step-tag">Step 1</span>
+                                <span class="op-title">DES Encryption</span>
+                                <span class="op-key-tag">Key: <strong>K1</strong></span>
+                            </div>
+
+                            <div class="flow-arrow-down">
+                                <span class="arrow-glyph">↓</span>
+                                <span class="flow-inter-tag">X<sub>1</sub> = E(K1, P)</span>
+                            </div>
+
+                            <div class="flow-block flow-op flow-op-dec">
+                                <span class="op-step-tag">Step 2</span>
+                                <span class="op-title">DES Decryption</span>
+                                <span class="op-key-tag">Key: <strong>K2</strong></span>
+                            </div>
+
+                            <div class="flow-arrow-down">
+                                <span class="arrow-glyph">↓</span>
+                                <span class="flow-inter-tag">X<sub>2</sub> = D(K2, X<sub>1</sub>)</span>
+                            </div>
+
+                            <div class="flow-block flow-op flow-op-enc">
+                                <span class="op-step-tag">Step 3</span>
+                                <span class="op-title">DES Encryption</span>
+                                <span class="op-key-tag">Key: <strong>K3</strong></span>
+                            </div>
+
+                            <div class="flow-arrow-down">
+                                <span class="arrow-glyph">↓</span>
+                            </div>
+
+                            <div class="flow-block flow-terminal flow-terminal-cipher">
+                                <span class="flow-label">Ciphertext</span>
+                                <span class="flow-symbol">C = E(K3, X<sub>2</sub>)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Decryption Flowchart -->
+                    <div class="flowchart-panel">
+                        <div class="flowchart-panel-header">
+                            <span class="flow-badge dec-bg">Decryption Sequence</span>
+                            <h4>Ciphertext → D(K3) → E(K2) → D(K1) → Plaintext</h4>
+                        </div>
+
+                        <div class="flowchart-visual">
+                            <div class="flow-block flow-terminal flow-terminal-cipher">
+                                <span class="flow-label">Ciphertext</span>
+                                <span class="flow-symbol">C</span>
+                            </div>
+
+                            <div class="flow-arrow-down">
+                                <span class="arrow-glyph">↓</span>
+                            </div>
+
+                            <div class="flow-block flow-op flow-op-dec">
+                                <span class="op-step-tag">Step 1</span>
+                                <span class="op-title">DES Decryption</span>
+                                <span class="op-key-tag">Key: <strong>K3</strong></span>
+                            </div>
+
+                            <div class="flow-arrow-down">
+                                <span class="arrow-glyph">↓</span>
+                                <span class="flow-inter-tag">Y<sub>1</sub> = D(K3, C)</span>
+                            </div>
+
+                            <div class="flow-block flow-op flow-op-enc">
+                                <span class="op-step-tag">Step 2</span>
+                                <span class="op-title">DES Encryption</span>
+                                <span class="op-key-tag">Key: <strong>K2</strong></span>
+                            </div>
+
+                            <div class="flow-arrow-down">
+                                <span class="arrow-glyph">↓</span>
+                                <span class="flow-inter-tag">Y<sub>2</sub> = E(K2, Y<sub>1</sub>)</span>
+                            </div>
+
+                            <div class="flow-block flow-op flow-op-dec">
+                                <span class="op-step-tag">Step 3</span>
+                                <span class="op-title">DES Decryption</span>
+                                <span class="op-key-tag">Key: <strong>K1</strong></span>
+                            </div>
+
+                            <div class="flow-arrow-down">
+                                <span class="arrow-glyph">↓</span>
+                            </div>
+
+                            <div class="flow-block flow-terminal">
+                                <span class="flow-label">Recovered Plaintext</span>
+                                <span class="flow-symbol">P = D(K1, Y<sub>2</sub>)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+
+            <!-- DES S-BOX SECTION -->
+            <section class="card" id="s-box">
+                <div class="section-heading">
+                    <span>06</span>
+                    <h3>DES S-Box (Substitution Box S1)</h3>
+                </div>
+
+                <div class="sbox-explanation">
+                    <h4>Purpose of S-Boxes in DES</h4>
+                    <p>
+                        In the Data Encryption Standard, <strong>S-boxes (Substitution boxes)</strong> serve as the
+                        <strong>only non-linear components</strong> in the cipher. While permutations and key additions
+                        are purely linear operations, S-boxes provide Claude Shannon's core cryptographic property of
+                        <strong>Confusion</strong>—obscuring algebraic dependencies between plaintext, key bits, and ciphertext bits.
+                    </p>
+                    <p>
+                        DES utilizes eight distinct S-boxes ($S_1$ through $S_8$). In each round, a 48-bit expanded block
+                        is split into eight 6-bit vectors. Each 6-bit block enters an S-box, which compresses it into
+                        a <strong>4-bit block</strong> ($8 \times 6\text{ bits} = 48\text{ bits} \to 8 \times 4\text{ bits} = 32\text{ bits}$).
+                    </p>
+                </div>
+
+                <div class="sbox-mapping-card">
+                    <h4>Mapping: How 6-Bit Input Converts to 4-Bit Output</h4>
+                    <p>
+                        Each S-box is organized as a <strong>4-row by 16-column matrix</strong> containing values from 0 to 15.
+                        Given any 6-bit binary input vector:
+                        <span class="binary-vector">b<sub>1</sub> b<sub>2</sub> b<sub>3</sub> b<sub>4</sub> b<sub>5</sub> b<sub>6</sub></span>
+                    </p>
+
+                    <div class="mapping-grid">
+                        <div class="mapping-box row-mapping">
+                            <span class="mapping-badge">Row Determination (2 Bits)</span>
+                            <h5>Outer Bits: b<sub>1</sub> and b<sub>6</sub></h5>
+                            <p>
+                                The first bit (MSB) and the sixth bit (LSB) are combined into a 2-bit binary number:
+                                <code>(b<sub>1</sub>b<sub>6</sub>)<sub>2</sub></code>.
+                                This value specifies the <strong>Row index</strong> (Row 0, 1, 2, or 3).
+                            </p>
+                        </div>
+
+                        <div class="mapping-box col-mapping">
+                            <span class="mapping-badge">Column Determination (4 Bits)</span>
+                            <h5>Middle Bits: b<sub>2</sub> b<sub>3</sub> b<sub>4</sub> b<sub>5</sub></h5>
+                            <p>
+                                The four middle bits are combined into a 4-bit binary number:
+                                <code>(b<sub>2</sub>b<sub>3</sub>b<sub>4</sub>b<sub>5</sub>)<sub>2</sub></code>.
+                                This value specifies the <strong>Column index</strong> (Columns 0 to 15).
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Authentic DES S-Box S1 Table -->
+                <div class="sbox-table-container">
+                    <div class="sbox-table-header">
+                        <h4>Authentic DES S-Box S1 Table</h4>
+                        <span class="spec-tag">Standard NIST FIPS PUB 46-3 Specification</span>
+                    </div>
+
+                    <div class="table-scroll-wrapper">
+                        <table class="sbox-lookup-table" id="sboxTable">
+                            <thead>
+                                <tr>
+                                    <th class="header-corner">Row \ Col</th>
+                                    <th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th>
+                                    <th>8</th><th>9</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr id="sbox-tr-0">
+                                    <th class="row-header">Row 0 (00<sub>2</sub>)</th>
+                                    <td>14</td><td>4</td><td>13</td><td>1</td><td>2</td><td>15</td><td>11</td><td>8</td>
+                                    <td>3</td><td>10</td><td>6</td><td>12</td><td>5</td><td>9</td><td>0</td><td>7</td>
+                                </tr>
+                                <tr id="sbox-tr-1">
+                                    <th class="row-header">Row 1 (01<sub>2</sub>)</th>
+                                    <td>0</td><td>15</td><td>7</td><td>4</td><td>14</td><td>2</td><td>13</td><td>1</td>
+                                    <td>10</td><td>6</td><td>12</td><td>11</td><td>9</td><td>5</td><td>3</td><td>8</td>
+                                </tr>
+                                <tr id="sbox-tr-2">
+                                    <th class="row-header">Row 2 (10<sub>2</sub>)</th>
+                                    <td>4</td><td>1</td><td>14</td><td>8</td><td>13</td><td>6</td><td>2</td><td>11</td>
+                                    <td>15</td><td>12</td><td>9</td><td>7</td><td>3</td><td>10</td><td>5</td><td>0</td>
+                                </tr>
+                                <tr id="sbox-tr-3">
+                                    <th class="row-header">Row 3 (11<sub>2</sub>)</th>
+                                    <td>15</td><td>12</td><td>8</td><td>2</td><td>4</td><td>9</td><td>1</td><td>7</td>
+                                    <td>5</td><td>11</td><td>3</td><td>14</td><td>10</td><td>0</td><td>6</td><td>13</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Interactive S-Box Calculator -->
+                <div class="sbox-calculator">
+                    <h4>Interactive S-Box 1 Lookup Calculator</h4>
+                    <p>Enter any 6-bit binary string to trace the row, column, and 4-bit output calculation, and highlight the corresponding cell in the table above.</p>
+
+                    <div class="sbox-input-bar">
+                        <div class="sbox-input-wrapper">
+                            <label for="sboxInput">6-Bit Binary Input:</label>
+                            <input
+                                type="text"
+                                id="sboxInput"
+                                maxlength="6"
+                                placeholder="e.g. 011011"
+                                value="011011"
+                                onkeypress="if(event.key === 'Enter') calculateSBox()"
+                            >
+                        </div>
+                        <button class="primary-button" onclick="calculateSBox()">Lookup S1</button>
+                        <button class="clear-button" onclick="resetSBox()">Reset</button>
+                    </div>
+
+                    <div class="sbox-presets-row">
+                        <span class="preset-label">Standard Test Inputs:</span>
+                        <button class="sbox-preset-pill" onclick="setSBoxInput('011011')">011011</button>
+                        <button class="sbox-preset-pill" onclick="setSBoxInput('101100')">101100</button>
+                        <button class="sbox-preset-pill" onclick="setSBoxInput('100001')">100001</button>
+                        <button class="sbox-preset-pill" onclick="setSBoxInput('000000')">000000</button>
+                        <button class="sbox-preset-pill" onclick="setSBoxInput('111111')">111111</button>
+                    </div>
+
+                    <div id="sboxError" class="error-message"></div>
+
+                    <!-- Step-by-Step Breakdown -->
+                    <div id="sboxResultArea" class="sbox-calc-result">
+                        <h5>Calculation Breakdown:</h5>
+
+                        <div class="sbox-result-cards">
+                            <div class="calc-card">
+                                <span class="calc-step-tag">Step 1</span>
+                                <h6>Bit Partitioning</h6>
+                                <div id="sboxBitsDisplay" class="bits-pill-container"></div>
+                            </div>
+
+                            <div class="calc-card">
+                                <span class="calc-step-tag">Step 2</span>
+                                <h6>Row (b<sub>1</sub>b<sub>6</sub>)</h6>
+                                <div class="calc-val-box">
+                                    <span id="sboxRowBinary">01<sub>2</sub></span>
+                                    <span class="calc-equals">=</span>
+                                    <strong id="sboxRowDecimal">Row 1</strong>
+                                </div>
+                            </div>
+
+                            <div class="calc-card">
+                                <span class="calc-step-tag">Step 3</span>
+                                <h6>Column (b<sub>2</sub>b<sub>3</sub>b<sub>4</sub>b<sub>5</sub>)</h6>
+                                <div class="calc-val-box">
+                                    <span id="sboxColBinary">1101<sub>2</sub></span>
+                                    <span class="calc-equals">=</span>
+                                    <strong id="sboxColDecimal">Column 13</strong>
+                                </div>
+                            </div>
+
+                            <div class="calc-card final-calc-card">
+                                <span class="calc-step-tag">Step 4</span>
+                                <h6>S1 Lookup & 4-Bit Output</h6>
+                                <div class="calc-val-box">
+                                    <span>S1[<span id="sboxResRow">1</span>][<span id="sboxResCol">13</span>] = <strong id="sboxTableValue">5</strong></span>
+                                </div>
+                                <div class="sbox-final-binary">
+                                    4-Bit Output: <strong id="sboxOutputBits">0101</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+
+            <!-- PROCEDURE -->
+            <section class="card" id="procedure">
+
+                <div class="section-heading">
+                    <span>07</span>
+                    <h3>Procedure</h3>
+                </div>
+
+                <h4>Double DES Procedure</h4>
+
+                <ol class="procedure-list">
+
+                    <li>Enter the plaintext message.</li>
+
+                    <li>Enter Key 1 and Key 2 in 16-character hexadecimal format.</li>
+
+                    <li>Click the <strong>Encrypt</strong> button.</li>
+
+                    <li>
+                        Observe the first DES encryption using Key 1 (intermediate output X1).
+                    </li>
+
+                    <li>
+                        Observe the second DES encryption using Key 2 (ciphertext C).
+                    </li>
+
+                    <li>
+                        Click <strong>Decrypt</strong>.
+                    </li>
+
+                    <li>
+                        Observe the reverse operations: Stage 1 decrypts with Key 2, and Stage 2 decrypts with Key 1 to recover the plaintext.
+                    </li>
+
+                </ol>
+
+
+                <h4>Triple DES Procedure</h4>
+
+                <ol class="procedure-list">
+
+                    <li>Enter the plaintext message.</li>
+
+                    <li>Select 1-key, 2-key, or 3-key mode.</li>
+
+                    <li>Enter the required DES keys in hexadecimal format.</li>
+
+                    <li>Click <strong>Encrypt</strong>.</li>
+
+                    <li>
+                        Observe the three sequential DES stages using the standard EDE structure:
+                        E(K1) → D(K2) → E(K3).
+                    </li>
+
+                    <li>
+                        Click <strong>Decrypt</strong>.
+                    </li>
+
+                    <li>
+                        Verify that reverse decryption: D(K3) → E(K2) → D(K1) recovers the original plaintext message.
+                    </li>
+
+                </ol>
+
+            </section>
+
+
             <!-- DOUBLE DES EXPERIMENT -->
             <section class="card experiment-card" id="double-des">
 
                 <div class="section-heading">
-                    <span>05</span>
+                    <span>08</span>
                     <h3>Double DES Experiment</h3>
                 </div>
 
@@ -517,7 +889,7 @@
             <section class="card experiment-card" id="triple-des">
 
                 <div class="section-heading">
-                    <span>06</span>
+                    <span>09</span>
                     <h3>Triple DES Experiment (1-Key, 2-Key & 3-Key)</h3>
                 </div>
 
@@ -810,378 +1182,6 @@
                     </div>
 
                 </div>
-
-            </section>
-
-
-            <!-- THREE-KEY DES FLOWCHART -->
-            <section class="card" id="flowchart">
-                <div class="section-heading">
-                    <span>07</span>
-                    <h3>Three-Key DES Flowchart</h3>
-                </div>
-
-                <p class="section-subtext">
-                    The structural flowcharts below detail the sequential operations and intermediate block transformations
-                    of 3-Key Triple DES for both encryption and reverse decryption.
-                </p>
-
-                <div class="flowcharts-container">
-
-                    <!-- Encryption Flowchart -->
-                    <div class="flowchart-panel">
-                        <div class="flowchart-panel-header">
-                            <span class="flow-badge enc-bg">Encryption Sequence</span>
-                            <h4>Plaintext → E(K1) → D(K2) → E(K3) → Ciphertext</h4>
-                        </div>
-
-                        <div class="flowchart-visual">
-                            <div class="flow-block flow-terminal">
-                                <span class="flow-label">Plaintext</span>
-                                <span class="flow-symbol">P</span>
-                            </div>
-
-                            <div class="flow-arrow-down">
-                                <span class="arrow-glyph">↓</span>
-                            </div>
-
-                            <div class="flow-block flow-op flow-op-enc">
-                                <span class="op-step-tag">Step 1</span>
-                                <span class="op-title">DES Encryption</span>
-                                <span class="op-key-tag">Key: <strong>K1</strong></span>
-                            </div>
-
-                            <div class="flow-arrow-down">
-                                <span class="arrow-glyph">↓</span>
-                                <span class="flow-inter-tag">X<sub>1</sub> = E(K1, P)</span>
-                            </div>
-
-                            <div class="flow-block flow-op flow-op-dec">
-                                <span class="op-step-tag">Step 2</span>
-                                <span class="op-title">DES Decryption</span>
-                                <span class="op-key-tag">Key: <strong>K2</strong></span>
-                            </div>
-
-                            <div class="flow-arrow-down">
-                                <span class="arrow-glyph">↓</span>
-                                <span class="flow-inter-tag">X<sub>2</sub> = D(K2, X<sub>1</sub>)</span>
-                            </div>
-
-                            <div class="flow-block flow-op flow-op-enc">
-                                <span class="op-step-tag">Step 3</span>
-                                <span class="op-title">DES Encryption</span>
-                                <span class="op-key-tag">Key: <strong>K3</strong></span>
-                            </div>
-
-                            <div class="flow-arrow-down">
-                                <span class="arrow-glyph">↓</span>
-                            </div>
-
-                            <div class="flow-block flow-terminal flow-terminal-cipher">
-                                <span class="flow-label">Ciphertext</span>
-                                <span class="flow-symbol">C = E(K3, X<sub>2</sub>)</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Decryption Flowchart -->
-                    <div class="flowchart-panel">
-                        <div class="flowchart-panel-header">
-                            <span class="flow-badge dec-bg">Decryption Sequence</span>
-                            <h4>Ciphertext → D(K3) → E(K2) → D(K1) → Plaintext</h4>
-                        </div>
-
-                        <div class="flowchart-visual">
-                            <div class="flow-block flow-terminal flow-terminal-cipher">
-                                <span class="flow-label">Ciphertext</span>
-                                <span class="flow-symbol">C</span>
-                            </div>
-
-                            <div class="flow-arrow-down">
-                                <span class="arrow-glyph">↓</span>
-                            </div>
-
-                            <div class="flow-block flow-op flow-op-dec">
-                                <span class="op-step-tag">Step 1</span>
-                                <span class="op-title">DES Decryption</span>
-                                <span class="op-key-tag">Key: <strong>K3</strong></span>
-                            </div>
-
-                            <div class="flow-arrow-down">
-                                <span class="arrow-glyph">↓</span>
-                                <span class="flow-inter-tag">Y<sub>1</sub> = D(K3, C)</span>
-                            </div>
-
-                            <div class="flow-block flow-op flow-op-enc">
-                                <span class="op-step-tag">Step 2</span>
-                                <span class="op-title">DES Encryption</span>
-                                <span class="op-key-tag">Key: <strong>K2</strong></span>
-                            </div>
-
-                            <div class="flow-arrow-down">
-                                <span class="arrow-glyph">↓</span>
-                                <span class="flow-inter-tag">Y<sub>2</sub> = E(K2, Y<sub>1</sub>)</span>
-                            </div>
-
-                            <div class="flow-block flow-op flow-op-dec">
-                                <span class="op-step-tag">Step 3</span>
-                                <span class="op-title">DES Decryption</span>
-                                <span class="op-key-tag">Key: <strong>K1</strong></span>
-                            </div>
-
-                            <div class="flow-arrow-down">
-                                <span class="arrow-glyph">↓</span>
-                            </div>
-
-                            <div class="flow-block flow-terminal">
-                                <span class="flow-label">Recovered Plaintext</span>
-                                <span class="flow-symbol">P = D(K1, Y<sub>2</sub>)</span>
-                            </div>
-                        </div>
-                    </div>
-
-                </div>
-            </section>
-
-
-            <!-- DES S-BOX SECTION -->
-            <section class="card" id="s-box">
-                <div class="section-heading">
-                    <span>08</span>
-                    <h3>DES S-Box (Substitution Box S1)</h3>
-                </div>
-
-                <div class="sbox-explanation">
-                    <h4>Purpose of S-Boxes in DES</h4>
-                    <p>
-                        In the Data Encryption Standard, <strong>S-boxes (Substitution boxes)</strong> serve as the
-                        <strong>only non-linear components</strong> in the cipher. While permutations and key additions
-                        are purely linear operations, S-boxes provide Claude Shannon's core cryptographic property of
-                        <strong>Confusion</strong>—obscuring algebraic dependencies between plaintext, key bits, and ciphertext bits.
-                    </p>
-                    <p>
-                        DES utilizes eight distinct S-boxes ($S_1$ through $S_8$). In each round, a 48-bit expanded block
-                        is split into eight 6-bit vectors. Each 6-bit block enters an S-box, which compresses it into
-                        a <strong>4-bit block</strong> ($8 \times 6\text{ bits} = 48\text{ bits} \to 8 \times 4\text{ bits} = 32\text{ bits}$).
-                    </p>
-                </div>
-
-                <div class="sbox-mapping-card">
-                    <h4>Mapping: How 6-Bit Input Converts to 4-Bit Output</h4>
-                    <p>
-                        Each S-box is organized as a <strong>4-row by 16-column matrix</strong> containing values from 0 to 15.
-                        Given any 6-bit binary input vector:
-                        <span class="binary-vector">b<sub>1</sub> b<sub>2</sub> b<sub>3</sub> b<sub>4</sub> b<sub>5</sub> b<sub>6</sub></span>
-                    </p>
-
-                    <div class="mapping-grid">
-                        <div class="mapping-box row-mapping">
-                            <span class="mapping-badge">Row Determination (2 Bits)</span>
-                            <h5>Outer Bits: b<sub>1</sub> and b<sub>6</sub></h5>
-                            <p>
-                                The first bit (MSB) and the sixth bit (LSB) are combined into a 2-bit binary number:
-                                <code>(b<sub>1</sub>b<sub>6</sub>)<sub>2</sub></code>.
-                                This value specifies the <strong>Row index</strong> (Row 0, 1, 2, or 3).
-                            </p>
-                        </div>
-
-                        <div class="mapping-box col-mapping">
-                            <span class="mapping-badge">Column Determination (4 Bits)</span>
-                            <h5>Middle Bits: b<sub>2</sub> b<sub>3</sub> b<sub>4</sub> b<sub>5</sub></h5>
-                            <p>
-                                The four middle bits are combined into a 4-bit binary number:
-                                <code>(b<sub>2</sub>b<sub>3</sub>b<sub>4</sub>b<sub>5</sub>)<sub>2</sub></code>.
-                                This value specifies the <strong>Column index</strong> (Columns 0 to 15).
-                            </p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Authentic DES S-Box S1 Table -->
-                <div class="sbox-table-container">
-                    <div class="sbox-table-header">
-                        <h4>Authentic DES S-Box S1 Table</h4>
-                        <span class="spec-tag">Standard NIST FIPS PUB 46-3 Specification</span>
-                    </div>
-
-                    <div class="table-scroll-wrapper">
-                        <table class="sbox-lookup-table" id="sboxTable">
-                            <thead>
-                                <tr>
-                                    <th class="header-corner">Row \ Col</th>
-                                    <th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th>
-                                    <th>8</th><th>9</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr id="sbox-tr-0">
-                                    <th class="row-header">Row 0 (00<sub>2</sub>)</th>
-                                    <td>14</td><td>4</td><td>13</td><td>1</td><td>2</td><td>15</td><td>11</td><td>8</td>
-                                    <td>3</td><td>10</td><td>6</td><td>12</td><td>5</td><td>9</td><td>0</td><td>7</td>
-                                </tr>
-                                <tr id="sbox-tr-1">
-                                    <th class="row-header">Row 1 (01<sub>2</sub>)</th>
-                                    <td>0</td><td>15</td><td>7</td><td>4</td><td>14</td><td>2</td><td>13</td><td>1</td>
-                                    <td>10</td><td>6</td><td>12</td><td>11</td><td>9</td><td>5</td><td>3</td><td>8</td>
-                                </tr>
-                                <tr id="sbox-tr-2">
-                                    <th class="row-header">Row 2 (10<sub>2</sub>)</th>
-                                    <td>4</td><td>1</td><td>14</td><td>8</td><td>13</td><td>6</td><td>2</td><td>11</td>
-                                    <td>15</td><td>12</td><td>9</td><td>7</td><td>3</td><td>10</td><td>5</td><td>0</td>
-                                </tr>
-                                <tr id="sbox-tr-3">
-                                    <th class="row-header">Row 3 (11<sub>2</sub>)</th>
-                                    <td>15</td><td>12</td><td>8</td><td>2</td><td>4</td><td>9</td><td>1</td><td>7</td>
-                                    <td>5</td><td>11</td><td>3</td><td>14</td><td>10</td><td>0</td><td>6</td><td>13</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- Interactive S-Box Calculator -->
-                <div class="sbox-calculator">
-                    <h4>Interactive S-Box 1 Lookup Calculator</h4>
-                    <p>Enter any 6-bit binary string to trace the row, column, and 4-bit output calculation, and highlight the corresponding cell in the table above.</p>
-
-                    <div class="sbox-input-bar">
-                        <div class="sbox-input-wrapper">
-                            <label for="sboxInput">6-Bit Binary Input:</label>
-                            <input
-                                type="text"
-                                id="sboxInput"
-                                maxlength="6"
-                                placeholder="e.g. 011011"
-                                value="011011"
-                                onkeypress="if(event.key === 'Enter') calculateSBox()"
-                            >
-                        </div>
-                        <button class="primary-button" onclick="calculateSBox()">Lookup S1</button>
-                        <button class="clear-button" onclick="resetSBox()">Reset</button>
-                    </div>
-
-                    <div class="sbox-presets-row">
-                        <span class="preset-label">Standard Test Inputs:</span>
-                        <button class="sbox-preset-pill" onclick="setSBoxInput('011011')">011011</button>
-                        <button class="sbox-preset-pill" onclick="setSBoxInput('101100')">101100</button>
-                        <button class="sbox-preset-pill" onclick="setSBoxInput('100001')">100001</button>
-                        <button class="sbox-preset-pill" onclick="setSBoxInput('000000')">000000</button>
-                        <button class="sbox-preset-pill" onclick="setSBoxInput('111111')">111111</button>
-                    </div>
-
-                    <div id="sboxError" class="error-message"></div>
-
-                    <!-- Step-by-Step Breakdown -->
-                    <div id="sboxResultArea" class="sbox-calc-result">
-                        <h5>Calculation Breakdown:</h5>
-
-                        <div class="sbox-result-cards">
-                            <div class="calc-card">
-                                <span class="calc-step-tag">Step 1</span>
-                                <h6>Bit Partitioning</h6>
-                                <div id="sboxBitsDisplay" class="bits-pill-container"></div>
-                            </div>
-
-                            <div class="calc-card">
-                                <span class="calc-step-tag">Step 2</span>
-                                <h6>Row (b<sub>1</sub>b<sub>6</sub>)</h6>
-                                <div class="calc-val-box">
-                                    <span id="sboxRowBinary">01<sub>2</sub></span>
-                                    <span class="calc-equals">=</span>
-                                    <strong id="sboxRowDecimal">Row 1</strong>
-                                </div>
-                            </div>
-
-                            <div class="calc-card">
-                                <span class="calc-step-tag">Step 3</span>
-                                <h6>Column (b<sub>2</sub>b<sub>3</sub>b<sub>4</sub>b<sub>5</sub>)</h6>
-                                <div class="calc-val-box">
-                                    <span id="sboxColBinary">1101<sub>2</sub></span>
-                                    <span class="calc-equals">=</span>
-                                    <strong id="sboxColDecimal">Column 13</strong>
-                                </div>
-                            </div>
-
-                            <div class="calc-card final-calc-card">
-                                <span class="calc-step-tag">Step 4</span>
-                                <h6>S1 Lookup & 4-Bit Output</h6>
-                                <div class="calc-val-box">
-                                    <span>S1[<span id="sboxResRow">1</span>][<span id="sboxResCol">13</span>] = <strong id="sboxTableValue">5</strong></span>
-                                </div>
-                                <div class="sbox-final-binary">
-                                    4-Bit Output: <strong id="sboxOutputBits">0101</strong>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </section>
-
-
-            <!-- PROCEDURE -->
-            <section class="card" id="procedure">
-
-                <div class="section-heading">
-                    <span>09</span>
-                    <h3>Procedure</h3>
-                </div>
-
-                <h4>Double DES Procedure</h4>
-
-                <ol class="procedure-list">
-
-                    <li>Enter the plaintext message.</li>
-
-                    <li>Enter Key 1 and Key 2 in 16-character hexadecimal format.</li>
-
-                    <li>Click the <strong>Encrypt</strong> button.</li>
-
-                    <li>
-                        Observe the first DES encryption using Key 1 (intermediate output X1).
-                    </li>
-
-                    <li>
-                        Observe the second DES encryption using Key 2 (ciphertext C).
-                    </li>
-
-                    <li>
-                        Click <strong>Decrypt</strong>.
-                    </li>
-
-                    <li>
-                        Observe the reverse operations: Stage 1 decrypts with Key 2, and Stage 2 decrypts with Key 1 to recover the plaintext.
-                    </li>
-
-                </ol>
-
-
-                <h4>Triple DES Procedure</h4>
-
-                <ol class="procedure-list">
-
-                    <li>Enter the plaintext message.</li>
-
-                    <li>Select 1-key, 2-key, or 3-key mode.</li>
-
-                    <li>Enter the required DES keys in hexadecimal format.</li>
-
-                    <li>Click <strong>Encrypt</strong>.</li>
-
-                    <li>
-                        Observe the three sequential DES stages using the standard EDE structure:
-                        E(K1) → D(K2) → E(K3).
-                    </li>
-
-                    <li>
-                        Click <strong>Decrypt</strong>.
-                    </li>
-
-                    <li>
-                        Verify that reverse decryption: D(K3) → E(K2) → D(K1) recovers the original plaintext message.
-                    </li>
-
-                </ol>
 
             </section>
 
