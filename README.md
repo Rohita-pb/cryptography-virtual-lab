@@ -4,7 +4,7 @@
 
 Interactive virtual laboratories demonstrating symmetric-key cryptography, multi-stage block cipher architectures, non-linear S-box transformations, and security analysis.
 
-## Experiments
+
 
 ### 1. Double DES & Triple DES Virtual Lab
 - **Directory:** [`des/`](./des/)
