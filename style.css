@@ -647,6 +647,11 @@ section.card,
     border-bottom: 1px dashed #edd8cf;
 }
 
+#des-algorithm .section-heading {
+    margin-top: 4px;
+    margin-bottom: 16px;
+}
+
 .theory-block:last-child {
     border-bottom: none;
 }

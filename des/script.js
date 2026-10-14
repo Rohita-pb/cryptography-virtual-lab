@@ -864,22 +864,32 @@ function closeSidebar() {
     if (overlay) overlay.classList.remove("active");
 }
 
+
 function setupScrollSpy() {
     const navLinks = document.querySelectorAll(".sidebar-menu .nav-link");
     const sectionIds = Array.from(navLinks).map(link => link.getAttribute("href").substring(1));
     const sections = sectionIds.map(id => document.getElementById(id)).filter(el => el !== null);
 
-    window.addEventListener("scroll", () => {
+    const updateActiveNav = () => {
         let currentSectionId = "";
         const scrollPosition = window.scrollY + 140;
+        const isNearBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 60;
 
-        sections.forEach(section => {
-            const sectionTop = section.offsetTop;
-            const sectionHeight = section.offsetHeight;
-            if (scrollPosition >= sectionTop && scrollPosition < sectionTop + sectionHeight) {
-                currentSectionId = section.getAttribute("id");
+        if (isNearBottom && sections.length > 0) {
+            currentSectionId = sections[sections.length - 1].getAttribute("id");
+        } else {
+            // Find the deepest section in document order whose top has been scrolled past
+            for (let i = sections.length - 1; i >= 0; i--) {
+                const sectionTop = sections[i].getBoundingClientRect().top + window.scrollY;
+                if (scrollPosition >= sectionTop) {
+                    currentSectionId = sections[i].getAttribute("id");
+                    break;
+                }
             }
-        });
+            if (!currentSectionId && sections.length > 0) {
+                currentSectionId = sections[0].getAttribute("id");
+            }
+        }
 
         if (currentSectionId) {
             navLinks.forEach(link => {
@@ -889,7 +899,10 @@ function setupScrollSpy() {
                 }
             });
         }
-    });
+    };
+
+    window.addEventListener("scroll", updateActiveNav, { passive: true });
+    updateActiveNav();
 
     // Close mobile drawer when clicking a navigation link
     navLinks.forEach(link => {
@@ -937,6 +950,7 @@ function shareExperiment() {
 }
 
 document.addEventListener("DOMContentLoaded", function() {
+
     // Initialize Triple DES mode selector
     changeTripleMode();
 
