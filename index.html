@@ -3,63 +3,1382 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="refresh" content="0; url=des/">
-    <title>DES Cryptography Virtual Lab</title>
-    <script>
-        window.location.replace("des/");
-    </script>
-    <style>
-        body {
-            font-family: Arial, Helvetica, sans-serif;
-            background: #fff8f5;
-            color: #5c3f32;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            margin: 0;
-            text-align: center;
-        }
-        .redirect-card {
-            background: white;
-            padding: 36px 42px;
-            border-radius: 16px;
-            border: 1px solid #eadbd5;
-            box-shadow: 0 4px 18px rgba(100, 70, 55, 0.08);
-            max-width: 450px;
-        }
-        h2 {
-            margin: 0 0 12px;
-            color: #8d6351;
-            font-size: 24px;
-        }
-        p {
-            margin: 8px 0;
-            color: #666666;
-            font-size: 15px;
-        }
-        a {
-            display: inline-block;
-            margin-top: 10px;
-            background: #a47864;
-            color: white;
-            text-decoration: none;
-            padding: 10px 22px;
-            border-radius: 8px;
-            font-weight: bold;
-            font-size: 14px;
-            transition: background 0.2s;
-        }
-        a:hover {
-            background: #8f6654;
-        }
-    </style>
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
+
+    <title>Double DES & Triple DES Virtual Lab</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- CryptoJS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.2.0/crypto-js.min.js"></script>
 </head>
+
 <body>
-    <div class="redirect-card">
-        <h2>DES Cryptography Virtual Lab</h2>
-        <p>Loading the virtual laboratory environment...</p>
-        <p><a href="des/">Enter Laboratory</a></p>
+
+    <!-- HEADER -->
+    <header class="top-header">
+        <div class="header-left">
+            <button class="sidebar-toggle-btn" id="sidebarToggleBtn" onclick="toggleSidebar()" aria-label="Toggle Navigation Sidebar">
+                <span class="hamburger-icon">☰</span>
+                <span class="toggle-text">Menu</span>
+            </button>
+
+            <div class="header-divider"></div>
+
+            <div class="header-title-group">
+                <h1>Computer Science Lab Manual</h1>
+                <p>Cryptography & System Security • DES Virtual Laboratory</p>
+            </div>
+        </div>
+
+        <button class="share-button" onclick="shareExperiment()" aria-label="Share Experiment">
+            ↗ Share
+        </button>
+    </header>
+
+    <!-- MOBILE SIDEBAR OVERLAY -->
+    <div class="sidebar-overlay" id="sidebarOverlay" onclick="closeSidebar()"></div>
+
+    <!-- LAYOUT CONTAINER -->
+    <div class="layout-container">
+
+        <!-- SIDEBAR MENU (Collapsible & Responsive) -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <span class="sidebar-title">Lab Navigation</span>
+                <button class="sidebar-collapse-toggle" id="sidebarCollapseBtn" onclick="toggleSidebar()" title="Collapse / Expand Sidebar" aria-label="Collapse / Expand Sidebar">
+                    <span id="collapseIcon">◀</span>
+                </button>
+            </div>
+
+            <nav class="sidebar-menu">
+                <ul>
+                    <li><a href="#aim" class="nav-link" data-tooltip="Aim"><span class="nav-num">01</span><span class="nav-text">Aim</span></a></li>
+                    <li><a href="#objectives" class="nav-link" data-tooltip="Objectives"><span class="nav-num">02</span><span class="nav-text">Objectives</span></a></li>
+                    <li><a href="#theory" class="nav-link" data-tooltip="Theory"><span class="nav-num">03</span><span class="nav-text">Theory</span></a></li>
+                    <li><a href="#des-algorithm" class="nav-link" data-tooltip="DES Algorithm"><span class="nav-num">04</span><span class="nav-text">DES Algorithm</span></a></li>
+                    <li><a href="#flowchart" class="nav-link" data-tooltip="Flowchart"><span class="nav-num">05</span><span class="nav-text">Flowchart</span></a></li>
+                    <li><a href="#s-box" class="nav-link" data-tooltip="S-Box"><span class="nav-num">06</span><span class="nav-text">S-Box</span></a></li>
+                    <li><a href="#procedure" class="nav-link" data-tooltip="Procedure"><span class="nav-num">07</span><span class="nav-text">Procedure</span></a></li>
+                    <li><a href="#double-des" class="nav-link" data-tooltip="Double DES"><span class="nav-num">08</span><span class="nav-text">Double DES</span></a></li>
+                    <li><a href="#triple-des" class="nav-link" data-tooltip="Triple DES (3-Key)"><span class="nav-num">09</span><span class="nav-text">Triple DES (3-Key)</span></a></li>
+                    <li><a href="#test-cases" class="nav-link" data-tooltip="Test Cases"><span class="nav-num">10</span><span class="nav-text">Test Cases</span></a></li>
+                    <li><a href="#quiz" class="nav-link" data-tooltip="Quiz"><span class="nav-num">11</span><span class="nav-text">Quiz</span></a></li>
+                    <li><a href="#references" class="nav-link" data-tooltip="References"><span class="nav-num">12</span><span class="nav-text">References</span></a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- MAIN CONTAINER -->
+        <main class="container">
+
+            <!-- TITLE -->
+            <section class="title-section">
+                <span class="badge">Cryptography & System Security</span>
+
+                <h2>Double DES & Triple DES Virtual Lab</h2>
+
+                <p>
+                    Interactive demonstration of Double DES and Triple DES
+                    encryption and decryption using one, two, and three key configurations,
+                    standard S-Box transformations, and architectural flowcharts.
+                </p>
+            </section>
+
+
+            <!-- AIM -->
+            <section class="card" id="aim">
+                <div class="section-heading">
+                    <span>01</span>
+                    <h3>Aim</h3>
+                </div>
+
+                <p>
+                    To demonstrate the encryption and decryption of a message
+                    using Double DES and Triple DES with one, two, and three keys,
+                    analyze the standard 3-Key EDE flowchart, and observe non-linear
+                    DES S-box substitutions.
+                </p>
+            </section>
+
+
+            <!-- OBJECTIVES -->
+            <section class="card" id="objectives">
+                <div class="section-heading">
+                    <span>02</span>
+                    <h3>Objectives</h3>
+                </div>
+
+                <ol class="objective-list">
+                    <li>Perform Double DES encryption and decryption.</li>
+                    <li>Perform Triple DES using one, two and three keys.</li>
+                    <li>Observe the individual stages of encryption and decryption.</li>
+                </ol>
+            </section>
+
+
+            <!-- THEORY -->
+            <section class="card" id="theory">
+                <div class="section-heading">
+                    <span>03</span>
+                    <h3>Theory</h3>
+                </div>
+
+                <p class="section-subtext">
+                    Theoretical background on symmetric-key cryptography, the Data Encryption Standard (DES), and multi-stage block cipher architectures.
+                </p>
+
+                <!-- DES ALGORITHM SUBSECTION -->
+                <div id="des-algorithm" class="theory-block">
+                    <div class="section-heading">
+                        <span>04</span>
+                        <h3>Data Encryption Standard (DES) Algorithm</h3>
+                    </div>
+
+                    <p>
+                        DES is a symmetric-key block cipher in which the same secret
+                        key is used for encryption and decryption. DES processes
+                        data in <strong>64-bit blocks</strong> and accepts a <strong>64-bit key</strong>,
+                        of which <strong>56 bits</strong> are effective cryptographic key bits and 8 bits
+                        are used for parity checking.
+                    </p>
+
+                    <p>
+                        DES uses a 16-round <strong>Feistel cipher network</strong>. Each round splits
+                        the 64-bit data block into 32-bit left ($L$) and right ($R$) halves, expands the right half to 48 bits,
+                        XORs it with a 48-bit round subkey, passes it through eight non-linear <strong>S-boxes</strong> to produce 32 bits,
+                        permutes it via a P-box, and XORs the result with the left half.
+                    </p>
+
+                    <div class="formula-box">
+                        <strong>DES Cipher Operation:</strong>
+                        <div class="formula">
+                            Encryption: C = DES(K, P)
+                        </div>
+                        <div class="formula">
+                            Decryption: P = DES<sup>-1</sup>(K, C)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="theory-block">
+                    <h4>Double DES</h4>
+
+                    <p>
+                        Double DES applies the DES encryption operation twice sequentially using
+                        two independent keys, K1 and K2.
+                    </p>
+
+                    <div class="formula-box">
+                        <strong>Double DES Encryption:</strong>
+                        <div class="formula">
+                            C = E(K2, E(K1, P))
+                        </div>
+
+                        <strong>Double DES Decryption:</strong>
+                        <div class="formula">
+                            P = D(K1, D(K2, C))
+                        </div>
+                    </div>
+
+                    <p class="crypto-note">
+                        <strong>Security Consideration:</strong> Despite using $2 \times 56 = 112$ key bits,
+                        Double DES is vulnerable to the <strong>Meet-in-the-Middle (MitM) attack</strong>, which reduces
+                        its effective computational complexity to approximately $2^{57}$ operations rather than $2^{112}$.
+                    </p>
+                </div>
+
+
+                <!-- TRIPLE DES FORMULA SECTION -->
+                <div class="theory-block" id="triple-des-formula-section">
+                    <h4>Triple DES (3-Key EDE) Mathematical Formulation</h4>
+
+                    <p>
+                        Triple DES was developed to prevent the Meet-in-the-Middle vulnerability of Double DES.
+                        It applies DES three consecutive times using the standard <strong>EDE (Encrypt–Decrypt–Encrypt)</strong>
+                        construction with three independent 56-bit keys: <strong>K1, K2, and K3</strong>.
+                    </p>
+
+                    <div class="triple-des-formula-card">
+                        <div class="formula-card-title">
+                            Standard Triple DES (3-Key) Equations
+                        </div>
+
+                        <div class="formulas-grid">
+                            <div class="formula-card-box">
+                                <span class="formula-badge enc-tag">Triple DES Encryption</span>
+                                <div class="math-formula">
+                                    C = E(K3, D(K2, E(K1, P)))
+                                </div>
+                            </div>
+
+                            <div class="formula-card-box">
+                                <span class="formula-badge dec-tag">Triple DES Decryption</span>
+                                <div class="math-formula">
+                                    P = D(K1, E(K2, D(K3, C)))
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="notation-panel">
+                            <h5>Explanation of Mathematical Notation:</h5>
+                            <ul class="notation-list">
+                                <li><strong>P</strong> = Plaintext block (64 bits)</li>
+                                <li><strong>C</strong> = Ciphertext block (64 bits)</li>
+                                <li><strong>E(K, X)</strong> = DES encryption of data block <code>X</code> using key <code>K</code></li>
+                                <li><strong>D(K, X)</strong> = DES decryption of data block <code>X</code> using key <code>K</code></li>
+                                <li><strong>K1, K2, K3</strong> = The three independent DES keys (56 effective bits each, totaling 168 key bits)</li>
+                            </ul>
+                        </div>
+
+                        <div class="steps-breakdown-grid">
+                            <div class="step-breakdown-col">
+                                <h5>Step-by-Step Encryption Process:</h5>
+                                <div class="operation-step-item">
+                                    <span class="op-num">1</span>
+                                    <div>
+                                        <strong>Stage 1 (Encrypt):</strong> Encrypt Plaintext <code>P</code> with Key <code>K1</code>:
+                                        <div class="step-math-val">X<sub>1</sub> = E(K1, P)</div>
+                                    </div>
+                                </div>
+                                <div class="operation-step-item">
+                                    <span class="op-num">2</span>
+                                    <div>
+                                        <strong>Stage 2 (Decrypt):</strong> Decrypt intermediate result <code>X<sub>1</sub></code> with Key <code>K2</code>:
+                                        <div class="step-math-val">X<sub>2</sub> = D(K2, X<sub>1</sub>) = D(K2, E(K1, P))</div>
+                                    </div>
+                                </div>
+                                <div class="operation-step-item">
+                                    <span class="op-num">3</span>
+                                    <div>
+                                        <strong>Stage 3 (Encrypt):</strong> Encrypt intermediate result <code>X<sub>2</sub></code> with Key <code>K3</code>:
+                                        <div class="step-math-val">C = E(K3, X<sub>2</sub>) = E(K3, D(K2, E(K1, P)))</div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="step-breakdown-col">
+                                <h5>Step-by-Step Decryption Process:</h5>
+                                <div class="operation-step-item">
+                                    <span class="op-num">1</span>
+                                    <div>
+                                        <strong>Stage 1 (Decrypt):</strong> Decrypt Ciphertext <code>C</code> with Key <code>K3</code>:
+                                        <div class="step-math-val">Y<sub>1</sub> = D(K3, C)</div>
+                                    </div>
+                                </div>
+                                <div class="operation-step-item">
+                                    <span class="op-num">2</span>
+                                    <div>
+                                        <strong>Stage 2 (Encrypt):</strong> Encrypt intermediate result <code>Y<sub>1</sub></code> with Key <code>K2</code>:
+                                        <div class="step-math-val">Y<sub>2</sub> = E(K2, Y<sub>1</sub>) = E(K2, D(K3, C))</div>
+                                    </div>
+                                </div>
+                                <div class="operation-step-item">
+                                    <span class="op-num">3</span>
+                                    <div>
+                                        <strong>Stage 3 (Decrypt):</strong> Decrypt intermediate result <code>Y<sub>2</sub></code> with Key <code>K1</code>:
+                                        <div class="step-math-val">P = D(K1, Y<sub>2</sub>) = D(K1, E(K2, D(K3, C)))</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="ede-rationale-box">
+                            <strong>Why Encrypt–Decrypt–Encrypt (EDE)?</strong>
+                            When all three keys are identical ($K1 = K2 = K3$), the middle decryption stage exactly cancels
+                            the first encryption stage:
+                            <span class="inline-math">D(K1, E(K1, P)) = P</span>, resulting in <span class="inline-math">C = E(K1, P)</span>.
+                            This provides complete backward compatibility with legacy single DES hardware.
+                        </div>
+                    </div>
+
+                    <h4>Triple DES Key Configurations</h4>
+
+                    <div class="key-table-wrapper">
+                        <table class="key-table">
+                            <thead>
+                                <tr>
+                                    <th>Mode</th>
+                                    <th>Key Sequence</th>
+                                    <th>Operation</th>
+                                    <th>Effective Key Length</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                <tr>
+                                    <td><strong>1 Key</strong></td>
+                                    <td>K1, K1, K1</td>
+                                    <td>E(K1) → D(K1) → E(K1)</td>
+                                    <td>56 bits (Single DES equivalent)</td>
+                                </tr>
+
+                                <tr>
+                                    <td><strong>2 Keys</strong></td>
+                                    <td>K1, K2, K1</td>
+                                    <td>E(K1) → D(K2) → E(K1)</td>
+                                    <td>112 bits</td>
+                                </tr>
+
+                                <tr>
+                                    <td><strong>3 Keys</strong></td>
+                                    <td>K1, K2, K3</td>
+                                    <td>E(K1) → D(K2) → E(K3)</td>
+                                    <td>168 bits (112 bits against MitM)</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+
+            <!-- THREE-KEY DES FLOWCHART -->
+            <section class="card" id="flowchart">
+                <div class="section-heading">
+                    <span>05</span>
+                    <h3>Three-Key DES Flowchart</h3>
+                </div>
+
+                <p class="section-subtext">
+                    The structural flowcharts below detail the sequential operations and intermediate block transformations
+                    of 3-Key Triple DES for both encryption and reverse decryption.
+                </p>
+
+                <div class="flowcharts-container">
+
+                    <!-- Encryption Flowchart -->
+                    <div class="flowchart-panel">
+                        <div class="flowchart-panel-header">
+                            <span class="flow-badge enc-bg">Encryption Sequence</span>
+                            <h4>Plaintext → E(K1) → D(K2) → E(K3) → Ciphertext</h4>
+                        </div>
+
+                        <div class="flowchart-visual">
+                            <div class="flow-block flow-terminal">
+                                <span class="flow-label">Plaintext</span>
+                                <span class="flow-symbol">P</span>
+                            </div>
+
+                            <div class="flow-arrow-down">
+                                <span class="arrow-glyph">↓</span>
+                            </div>
+
+                            <div class="flow-block flow-op flow-op-enc">
+                                <span class="op-step-tag">Step 1</span>
+                                <span class="op-title">DES Encryption</span>
+                                <span class="op-key-tag">Key: <strong>K1</strong></span>
+                            </div>
+
+                            <div class="flow-arrow-down">
+                                <span class="arrow-glyph">↓</span>
+                                <span class="flow-inter-tag">X<sub>1</sub> = E(K1, P)</span>
+                            </div>
+
+                            <div class="flow-block flow-op flow-op-dec">
+                                <span class="op-step-tag">Step 2</span>
+                                <span class="op-title">DES Decryption</span>
+                                <span class="op-key-tag">Key: <strong>K2</strong></span>
+                            </div>
+
+                            <div class="flow-arrow-down">
+                                <span class="arrow-glyph">↓</span>
+                                <span class="flow-inter-tag">X<sub>2</sub> = D(K2, X<sub>1</sub>)</span>
+                            </div>
+
+                            <div class="flow-block flow-op flow-op-enc">
+                                <span class="op-step-tag">Step 3</span>
+                                <span class="op-title">DES Encryption</span>
+                                <span class="op-key-tag">Key: <strong>K3</strong></span>
+                            </div>
+
+                            <div class="flow-arrow-down">
+                                <span class="arrow-glyph">↓</span>
+                            </div>
+
+                            <div class="flow-block flow-terminal flow-terminal-cipher">
+                                <span class="flow-label">Ciphertext</span>
+                                <span class="flow-symbol">C = E(K3, X<sub>2</sub>)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Decryption Flowchart -->
+                    <div class="flowchart-panel">
+                        <div class="flowchart-panel-header">
+                            <span class="flow-badge dec-bg">Decryption Sequence</span>
+                            <h4>Ciphertext → D(K3) → E(K2) → D(K1) → Plaintext</h4>
+                        </div>
+
+                        <div class="flowchart-visual">
+                            <div class="flow-block flow-terminal flow-terminal-cipher">
+                                <span class="flow-label">Ciphertext</span>
+                                <span class="flow-symbol">C</span>
+                            </div>
+
+                            <div class="flow-arrow-down">
+                                <span class="arrow-glyph">↓</span>
+                            </div>
+
+                            <div class="flow-block flow-op flow-op-dec">
+                                <span class="op-step-tag">Step 1</span>
+                                <span class="op-title">DES Decryption</span>
+                                <span class="op-key-tag">Key: <strong>K3</strong></span>
+                            </div>
+
+                            <div class="flow-arrow-down">
+                                <span class="arrow-glyph">↓</span>
+                                <span class="flow-inter-tag">Y<sub>1</sub> = D(K3, C)</span>
+                            </div>
+
+                            <div class="flow-block flow-op flow-op-enc">
+                                <span class="op-step-tag">Step 2</span>
+                                <span class="op-title">DES Encryption</span>
+                                <span class="op-key-tag">Key: <strong>K2</strong></span>
+                            </div>
+
+                            <div class="flow-arrow-down">
+                                <span class="arrow-glyph">↓</span>
+                                <span class="flow-inter-tag">Y<sub>2</sub> = E(K2, Y<sub>1</sub>)</span>
+                            </div>
+
+                            <div class="flow-block flow-op flow-op-dec">
+                                <span class="op-step-tag">Step 3</span>
+                                <span class="op-title">DES Decryption</span>
+                                <span class="op-key-tag">Key: <strong>K1</strong></span>
+                            </div>
+
+                            <div class="flow-arrow-down">
+                                <span class="arrow-glyph">↓</span>
+                            </div>
+
+                            <div class="flow-block flow-terminal">
+                                <span class="flow-label">Recovered Plaintext</span>
+                                <span class="flow-symbol">P = D(K1, Y<sub>2</sub>)</span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+
+            <!-- DES S-BOX SECTION -->
+            <section class="card" id="s-box">
+                <div class="section-heading">
+                    <span>06</span>
+                    <h3>DES S-Box (Substitution Box S1)</h3>
+                </div>
+
+                <div class="sbox-explanation">
+                    <h4>Purpose of S-Boxes in DES</h4>
+                    <p>
+                        In the Data Encryption Standard, <strong>S-boxes (Substitution boxes)</strong> serve as the
+                        <strong>only non-linear components</strong> in the cipher. While permutations and key additions
+                        are purely linear operations, S-boxes provide Claude Shannon's core cryptographic property of
+                        <strong>Confusion</strong>—obscuring algebraic dependencies between plaintext, key bits, and ciphertext bits.
+                    </p>
+                    <p>
+                        DES utilizes eight distinct S-boxes ($S_1$ through $S_8$). In each round, a 48-bit expanded block
+                        is split into eight 6-bit vectors. Each 6-bit block enters an S-box, which compresses it into
+                        a <strong>4-bit block</strong> ($8 \times 6\text{ bits} = 48\text{ bits} \to 8 \times 4\text{ bits} = 32\text{ bits}$).
+                    </p>
+                </div>
+
+                <div class="sbox-mapping-card">
+                    <h4>Mapping: How 6-Bit Input Converts to 4-Bit Output</h4>
+                    <p>
+                        Each S-box is organized as a <strong>4-row by 16-column matrix</strong> containing values from 0 to 15.
+                        Given any 6-bit binary input vector:
+                        <span class="binary-vector">b<sub>1</sub> b<sub>2</sub> b<sub>3</sub> b<sub>4</sub> b<sub>5</sub> b<sub>6</sub></span>
+                    </p>
+
+                    <div class="mapping-grid">
+                        <div class="mapping-box row-mapping">
+                            <span class="mapping-badge">Row Determination (2 Bits)</span>
+                            <h5>Outer Bits: b<sub>1</sub> and b<sub>6</sub></h5>
+                            <p>
+                                The first bit (MSB) and the sixth bit (LSB) are combined into a 2-bit binary number:
+                                <code>(b<sub>1</sub>b<sub>6</sub>)<sub>2</sub></code>.
+                                This value specifies the <strong>Row index</strong> (Row 0, 1, 2, or 3).
+                            </p>
+                        </div>
+
+                        <div class="mapping-box col-mapping">
+                            <span class="mapping-badge">Column Determination (4 Bits)</span>
+                            <h5>Middle Bits: b<sub>2</sub> b<sub>3</sub> b<sub>4</sub> b<sub>5</sub></h5>
+                            <p>
+                                The four middle bits are combined into a 4-bit binary number:
+                                <code>(b<sub>2</sub>b<sub>3</sub>b<sub>4</sub>b<sub>5</sub>)<sub>2</sub></code>.
+                                This value specifies the <strong>Column index</strong> (Columns 0 to 15).
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Authentic DES S-Box S1 Table -->
+                <div class="sbox-table-container">
+                    <div class="sbox-table-header">
+                        <h4>Authentic DES S-Box S1 Table</h4>
+                        <span class="spec-tag">Standard NIST FIPS PUB 46-3 Specification</span>
+                    </div>
+
+                    <div class="table-scroll-wrapper">
+                        <table class="sbox-lookup-table" id="sboxTable">
+                            <thead>
+                                <tr>
+                                    <th class="header-corner">Row \ Col</th>
+                                    <th>0</th><th>1</th><th>2</th><th>3</th><th>4</th><th>5</th><th>6</th><th>7</th>
+                                    <th>8</th><th>9</th><th>10</th><th>11</th><th>12</th><th>13</th><th>14</th><th>15</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr id="sbox-tr-0">
+                                    <th class="row-header">Row 0 (00<sub>2</sub>)</th>
+                                    <td>14</td><td>4</td><td>13</td><td>1</td><td>2</td><td>15</td><td>11</td><td>8</td>
+                                    <td>3</td><td>10</td><td>6</td><td>12</td><td>5</td><td>9</td><td>0</td><td>7</td>
+                                </tr>
+                                <tr id="sbox-tr-1">
+                                    <th class="row-header">Row 1 (01<sub>2</sub>)</th>
+                                    <td>0</td><td>15</td><td>7</td><td>4</td><td>14</td><td>2</td><td>13</td><td>1</td>
+                                    <td>10</td><td>6</td><td>12</td><td>11</td><td>9</td><td>5</td><td>3</td><td>8</td>
+                                </tr>
+                                <tr id="sbox-tr-2">
+                                    <th class="row-header">Row 2 (10<sub>2</sub>)</th>
+                                    <td>4</td><td>1</td><td>14</td><td>8</td><td>13</td><td>6</td><td>2</td><td>11</td>
+                                    <td>15</td><td>12</td><td>9</td><td>7</td><td>3</td><td>10</td><td>5</td><td>0</td>
+                                </tr>
+                                <tr id="sbox-tr-3">
+                                    <th class="row-header">Row 3 (11<sub>2</sub>)</th>
+                                    <td>15</td><td>12</td><td>8</td><td>2</td><td>4</td><td>9</td><td>1</td><td>7</td>
+                                    <td>5</td><td>11</td><td>3</td><td>14</td><td>10</td><td>0</td><td>6</td><td>13</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Interactive S-Box Calculator -->
+                <div class="sbox-calculator">
+                    <h4>Interactive S-Box 1 Lookup Calculator</h4>
+                    <p>Enter any 6-bit binary string to trace the row, column, and 4-bit output calculation, and highlight the corresponding cell in the table above.</p>
+
+                    <div class="sbox-input-bar">
+                        <div class="sbox-input-wrapper">
+                            <label for="sboxInput">6-Bit Binary Input:</label>
+                            <input
+                                type="text"
+                                id="sboxInput"
+                                maxlength="6"
+                                placeholder="e.g. 011011"
+                                value="011011"
+                                onkeypress="if(event.key === 'Enter') calculateSBox()"
+                            >
+                        </div>
+                        <button class="primary-button" onclick="calculateSBox()">Lookup S1</button>
+                        <button class="clear-button" onclick="resetSBox()">Reset</button>
+                    </div>
+
+                    <div class="sbox-presets-row">
+                        <span class="preset-label">Standard Test Inputs:</span>
+                        <button class="sbox-preset-pill" onclick="setSBoxInput('011011')">011011</button>
+                        <button class="sbox-preset-pill" onclick="setSBoxInput('101100')">101100</button>
+                        <button class="sbox-preset-pill" onclick="setSBoxInput('100001')">100001</button>
+                        <button class="sbox-preset-pill" onclick="setSBoxInput('000000')">000000</button>
+                        <button class="sbox-preset-pill" onclick="setSBoxInput('111111')">111111</button>
+                    </div>
+
+                    <div id="sboxError" class="error-message"></div>
+
+                    <!-- Step-by-Step Breakdown -->
+                    <div id="sboxResultArea" class="sbox-calc-result">
+                        <h5>Calculation Breakdown:</h5>
+
+                        <div class="sbox-result-cards">
+                            <div class="calc-card">
+                                <span class="calc-step-tag">Step 1</span>
+                                <h6>Bit Partitioning</h6>
+                                <div id="sboxBitsDisplay" class="bits-pill-container"></div>
+                            </div>
+
+                            <div class="calc-card">
+                                <span class="calc-step-tag">Step 2</span>
+                                <h6>Row (b<sub>1</sub>b<sub>6</sub>)</h6>
+                                <div class="calc-val-box">
+                                    <span id="sboxRowBinary">01<sub>2</sub></span>
+                                    <span class="calc-equals">=</span>
+                                    <strong id="sboxRowDecimal">Row 1</strong>
+                                </div>
+                            </div>
+
+                            <div class="calc-card">
+                                <span class="calc-step-tag">Step 3</span>
+                                <h6>Column (b<sub>2</sub>b<sub>3</sub>b<sub>4</sub>b<sub>5</sub>)</h6>
+                                <div class="calc-val-box">
+                                    <span id="sboxColBinary">1101<sub>2</sub></span>
+                                    <span class="calc-equals">=</span>
+                                    <strong id="sboxColDecimal">Column 13</strong>
+                                </div>
+                            </div>
+
+                            <div class="calc-card final-calc-card">
+                                <span class="calc-step-tag">Step 4</span>
+                                <h6>S1 Lookup & 4-Bit Output</h6>
+                                <div class="calc-val-box">
+                                    <span>S1[<span id="sboxResRow">1</span>][<span id="sboxResCol">13</span>] = <strong id="sboxTableValue">5</strong></span>
+                                </div>
+                                <div class="sbox-final-binary">
+                                    4-Bit Output: <strong id="sboxOutputBits">0101</strong>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+
+
+            <!-- PROCEDURE -->
+            <section class="card" id="procedure">
+
+                <div class="section-heading">
+                    <span>07</span>
+                    <h3>Procedure</h3>
+                </div>
+
+                <h4>Double DES Procedure</h4>
+
+                <ol class="procedure-list">
+
+                    <li>Enter the plaintext message.</li>
+
+                    <li>Enter Key 1 and Key 2 in 16-character hexadecimal format.</li>
+
+                    <li>Click the <strong>Encrypt</strong> button.</li>
+
+                    <li>
+                        Observe the first DES encryption using Key 1 (intermediate output X1).
+                    </li>
+
+                    <li>
+                        Observe the second DES encryption using Key 2 (ciphertext C).
+                    </li>
+
+                    <li>
+                        Click <strong>Decrypt</strong>.
+                    </li>
+
+                    <li>
+                        Observe the reverse operations: Stage 1 decrypts with Key 2, and Stage 2 decrypts with Key 1 to recover the plaintext.
+                    </li>
+
+                </ol>
+
+
+                <h4>Triple DES Procedure</h4>
+
+                <ol class="procedure-list">
+
+                    <li>Enter the plaintext message.</li>
+
+                    <li>Select 1-key, 2-key, or 3-key mode.</li>
+
+                    <li>Enter the required DES keys in hexadecimal format.</li>
+
+                    <li>Click <strong>Encrypt</strong>.</li>
+
+                    <li>
+                        Observe the three sequential DES stages using the standard EDE structure:
+                        E(K1) → D(K2) → E(K3).
+                    </li>
+
+                    <li>
+                        Click <strong>Decrypt</strong>.
+                    </li>
+
+                    <li>
+                        Verify that reverse decryption: D(K3) → E(K2) → D(K1) recovers the original plaintext message.
+                    </li>
+
+                </ol>
+
+            </section>
+
+
+            <!-- DOUBLE DES EXPERIMENT -->
+            <section class="card experiment-card" id="double-des">
+
+                <div class="section-heading">
+                    <span>08</span>
+                    <h3>Double DES Experiment</h3>
+                </div>
+
+                <p class="experiment-description">
+                    Enter a message and two DES keys. The system will perform
+                    DES encryption twice and display each intermediate stage.
+                </p>
+
+
+                <div class="input-group">
+                    <label for="doubleMessage">
+                        Message
+                    </label>
+
+                    <textarea
+                        id="doubleMessage"
+                        placeholder="Enter your message..."
+                        rows="3"
+                    ></textarea>
+                </div>
+
+
+                <div class="two-column">
+
+                    <div class="input-group">
+                        <label for="doubleKey1">
+                            Key 1
+                            <small>16 hexadecimal characters</small>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="doubleKey1"
+                            maxlength="16"
+                            placeholder="0123456789ABCDEF"
+                        >
+                    </div>
+
+
+                    <div class="input-group">
+                        <label for="doubleKey2">
+                            Key 2
+                            <small>16 hexadecimal characters</small>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="doubleKey2"
+                            maxlength="16"
+                            placeholder="FEDCBA9876543210"
+                        >
+                    </div>
+
+                </div>
+
+
+                <div class="button-row">
+
+                    <button
+                        class="primary-button"
+                        onclick="doubleEncrypt()"
+                    >
+                        🔐 Encrypt
+                    </button>
+
+                    <button
+                        class="secondary-button"
+                        onclick="doubleDecrypt()"
+                    >
+                        🔓 Decrypt
+                    </button>
+
+                    <button
+                        class="clear-button"
+                        onclick="clearDoubleDES()"
+                    >
+                        Clear
+                    </button>
+
+                </div>
+
+
+                <div id="doubleError" class="error-message"></div>
+
+
+                <!-- DOUBLE DES ENCRYPTION STEPS -->
+                <div id="doubleEncryptionResult" class="result-area hidden">
+
+                    <h4>Encryption Process</h4>
+
+                    <div class="process-step">
+                        <span class="step-number">1</span>
+
+                        <div>
+                            <strong>Original Plaintext</strong>
+                            <div id="doublePlainDisplay" class="output-box"></div>
+                        </div>
+                    </div>
+
+
+                    <div class="process-arrow">↓</div>
+
+
+                    <div class="process-step">
+                        <span class="step-number">2</span>
+
+                        <div>
+                            <strong>DES Encryption using Key 1 (Intermediate X1)</strong>
+                            <div id="doubleIntermediate" class="output-box"></div>
+                        </div>
+                    </div>
+
+
+                    <div class="process-arrow">↓</div>
+
+
+                    <div class="process-step final-step">
+                        <span class="step-number">3</span>
+
+                        <div>
+                            <strong>DES Encryption using Key 2 (Final Ciphertext C)</strong>
+                            <div id="doubleCipherDisplay" class="output-box"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+
+                <!-- DOUBLE DES DECRYPTION -->
+                <div id="doubleDecryptionResult" class="result-area hidden">
+
+                    <h4>Decryption Process</h4>
+
+                    <div class="process-step">
+                        <span class="step-number">1</span>
+
+                        <div>
+                            <strong>Ciphertext</strong>
+                            <div id="doubleDecryptCipher" class="output-box"></div>
+                        </div>
+                    </div>
+
+
+                    <div class="process-arrow">↓</div>
+
+
+                    <div class="process-step">
+                        <span class="step-number">2</span>
+
+                        <div>
+                            <strong>DES Decryption using Key 2</strong>
+                            <div id="doubleDecryptIntermediate" class="output-box"></div>
+                        </div>
+                    </div>
+
+
+                    <div class="process-arrow">↓</div>
+
+
+                    <div class="process-step final-step">
+                        <span class="step-number">3</span>
+
+                        <div>
+                            <strong>DES Decryption using Key 1</strong>
+                            <div id="doubleDecryptedMessage" class="output-box success-output"></div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- TRIPLE DES EXPERIMENT -->
+            <section class="card experiment-card" id="triple-des">
+
+                <div class="section-heading">
+                    <span>09</span>
+                    <h3>Triple DES Experiment (1-Key, 2-Key & 3-Key)</h3>
+                </div>
+
+                <p class="experiment-description">
+                    Select the key configuration and execute Triple DES
+                    encryption and decryption using the standard EDE construction.
+                </p>
+
+
+                <!-- KEY MODE -->
+                <div class="mode-selector">
+
+                    <label>Number of Keys</label>
+
+                    <div class="radio-container">
+
+                        <label class="radio-option">
+                            <input
+                                type="radio"
+                                name="tripleMode"
+                                value="1"
+                                checked
+                                onchange="changeTripleMode()"
+                            >
+                            <span>1 Key (K1, K1, K1)</span>
+                        </label>
+
+
+                        <label class="radio-option">
+                            <input
+                                type="radio"
+                                name="tripleMode"
+                                value="2"
+                                onchange="changeTripleMode()"
+                            >
+                            <span>2 Keys (K1, K2, K1)</span>
+                        </label>
+
+
+                        <label class="radio-option">
+                            <input
+                                type="radio"
+                                name="tripleMode"
+                                value="3"
+                                onchange="changeTripleMode()"
+                            >
+                            <span>3 Keys (K1, K2, K3)</span>
+                        </label>
+
+                    </div>
+
+                </div>
+
+
+                <div class="input-group">
+
+                    <label for="tripleMessage">
+                        Message
+                    </label>
+
+                    <textarea
+                        id="tripleMessage"
+                        rows="3"
+                        placeholder="Enter your message..."
+                    ></textarea>
+
+                </div>
+
+
+                <div class="key-inputs">
+
+                    <div class="input-group">
+                        <label for="tripleKey1">
+                            Key 1
+                            <small>16 hexadecimal characters</small>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="tripleKey1"
+                            maxlength="16"
+                            placeholder="0123456789ABCDEF"
+                        >
+                    </div>
+
+
+                    <div
+                        class="input-group"
+                        id="tripleKey2Group"
+                    >
+
+                        <label for="tripleKey2">
+                            Key 2
+                            <small>16 hexadecimal characters</small>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="tripleKey2"
+                            maxlength="16"
+                            placeholder="FEDCBA9876543210"
+                        >
+
+                    </div>
+
+
+                    <div
+                        class="input-group"
+                        id="tripleKey3Group"
+                    >
+
+                        <label for="tripleKey3">
+                            Key 3
+                            <small>16 hexadecimal characters</small>
+                        </label>
+
+                        <input
+                            type="text"
+                            id="tripleKey3"
+                            maxlength="16"
+                            placeholder="0011223344556677"
+                        >
+
+                    </div>
+
+                </div>
+
+
+                <div id="tripleModeDescription" class="mode-description">
+                    <strong>1-Key Triple DES:</strong>
+                    K1 → K1 → K1 using EDE.
+                </div>
+
+
+                <div class="button-row">
+
+                    <button
+                        class="primary-button"
+                        onclick="tripleEncrypt()"
+                    >
+                        🔐 Encrypt
+                    </button>
+
+                    <button
+                        class="secondary-button"
+                        onclick="tripleDecrypt()"
+                    >
+                        🔓 Decrypt
+                    </button>
+
+                    <button
+                        class="clear-button"
+                        onclick="clearTripleDES()"
+                    >
+                        Clear
+                    </button>
+
+                </div>
+
+
+                <div id="tripleError" class="error-message"></div>
+
+
+                <!-- TRIPLE ENCRYPTION RESULT -->
+                <div id="tripleEncryptionResult" class="result-area hidden">
+
+                    <h4>Triple DES Encryption Process</h4>
+
+                    <div class="process-step">
+
+                        <span class="step-number">1</span>
+
+                        <div>
+                            <strong>Original Plaintext (P)</strong>
+                            <div id="triplePlainDisplay" class="output-box"></div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="process-arrow">↓</div>
+
+
+                    <div class="process-step">
+
+                        <span class="step-number">2</span>
+
+                        <div>
+                            <strong>DES Encryption using K1: X<sub>1</sub> = E(K1, P)</strong>
+                            <div id="tripleStep1" class="output-box"></div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="process-arrow">↓</div>
+
+
+                    <div class="process-step">
+
+                        <span class="step-number">3</span>
+
+                        <div>
+                            <strong>DES Decryption using K2: X<sub>2</sub> = D(K2, X<sub>1</sub>)</strong>
+                            <div id="tripleStep2" class="output-box"></div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="process-arrow">↓</div>
+
+
+                    <div class="process-step final-step">
+
+                        <span class="step-number">4</span>
+
+                        <div>
+                            <strong>DES Encryption using K3: C = E(K3, X<sub>2</sub>)</strong>
+                            <div id="tripleCipherDisplay" class="output-box"></div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <!-- TRIPLE DECRYPTION RESULT -->
+                <div id="tripleDecryptionResult" class="result-area hidden">
+
+                    <h4>Triple DES Decryption Process</h4>
+
+                    <div class="process-step">
+
+                        <span class="step-number">1</span>
+
+                        <div>
+                            <strong>Ciphertext (C)</strong>
+                            <div id="tripleDecryptCipher" class="output-box"></div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="process-arrow">↓</div>
+
+
+                    <div class="process-step">
+
+                        <span class="step-number">2</span>
+
+                        <div>
+                            <strong>DES Decryption using K3: Y<sub>1</sub> = D(K3, C)</strong>
+                            <div id="tripleDecryptStep1" class="output-box"></div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="process-arrow">↓</div>
+
+
+                    <div class="process-step">
+
+                        <span class="step-number">3</span>
+
+                        <div>
+                            <strong>DES Encryption using K2: Y<sub>2</sub> = E(K2, Y<sub>1</sub>)</strong>
+                            <div id="tripleDecryptStep2" class="output-box"></div>
+                        </div>
+
+                    </div>
+
+
+                    <div class="process-arrow">↓</div>
+
+
+                    <div class="process-step final-step">
+
+                        <span class="step-number">4</span>
+
+                        <div>
+                            <strong>DES Decryption using K1: P = D(K1, Y<sub>2</sub>)</strong>
+                            <div
+                                id="tripleDecryptedMessage"
+                                class="output-box success-output"
+                            ></div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </section>
+
+
+            <!-- TEST CASES -->
+            <section class="card" id="test-cases">
+
+                <div class="section-heading">
+                    <span>10</span>
+                    <h3>Test Cases</h3>
+                </div>
+
+                <div class="table-wrapper">
+
+                    <table class="test-table">
+
+                        <thead>
+                            <tr>
+                                <th>Test</th>
+                                <th>Experiment</th>
+                                <th>Input</th>
+                                <th>Expected Result</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr>
+                                <td>1</td>
+                                <td>Double DES</td>
+                                <td>Hello World</td>
+                                <td>Decryption returns "Hello World"</td>
+                            </tr>
+
+                            <tr>
+                                <td>2</td>
+                                <td>Double DES</td>
+                                <td>Cryptography</td>
+                                <td>Decryption returns "Cryptography"</td>
+                            </tr>
+
+                            <tr>
+                                <td>3</td>
+                                <td>Triple DES - 1 Key</td>
+                                <td>Hello DES</td>
+                                <td>Decryption returns "Hello DES"</td>
+                            </tr>
+
+                            <tr>
+                                <td>4</td>
+                                <td>Triple DES - 2 Keys</td>
+                                <td>Hello DES</td>
+                                <td>Decryption returns "Hello DES"</td>
+                            </tr>
+
+                            <tr>
+                                <td>5</td>
+                                <td>Triple DES - 3 Keys</td>
+                                <td>Cryptography</td>
+                                <td>Decryption returns "Cryptography"</td>
+                            </tr>
+
+                            <tr>
+                                <td>6</td>
+                                <td>S-Box 1 Lookup</td>
+                                <td>Input: 011011</td>
+                                <td>Row 1, Col 13 → Value 5 (0101)</td>
+                            </tr>
+
+                            <tr>
+                                <td>7</td>
+                                <td>Invalid Key Input</td>
+                                <td>Key containing non-hex / wrong length</td>
+                                <td>Validation error message displayed</td>
+                            </tr>
+
+                            <tr>
+                                <td>8</td>
+                                <td>Invalid S-Box Input</td>
+                                <td>Length != 6 or non-binary digits</td>
+                                <td>S-Box validation error displayed</td>
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+
+            <!-- ASSESSMENT / QUIZ -->
+            <section class="card" id="quiz">
+
+                <div class="section-heading">
+                    <span>11</span>
+                    <h3>Assessment / Cryptography Engineering Quiz</h3>
+                </div>
+
+                <div class="quiz-intro-bar">
+                    <div>
+                        <h4>Conceptual & Practical Evaluation</h4>
+                        <p>Complete this 10-question evaluation on Triple DES architecture, formula inversion, flowchart stages, and S-box calculations.</p>
+                    </div>
+                    <div class="quiz-score-pill">
+                        <span id="quizScoreHeader">Score: 0 / 10</span>
+                    </div>
+                </div>
+
+                <div class="quiz-questions-wrapper" id="quizQuestionsContainer">
+                    <!-- Dynamic Interactive Quiz Rendered Here by script.js -->
+                </div>
+
+                <div class="quiz-action-bar">
+                    <button class="primary-button quiz-submit-btn" onclick="submitQuiz()">
+                        ✓ Submit & Finalize Quiz
+                    </button>
+                    <button class="clear-button" onclick="resetQuiz()">
+                        ↺ Reset Quiz
+                    </button>
+                </div>
+
+                <div id="quizResult" class="quiz-result-summary hidden"></div>
+
+            </section>
+
+
+            <!-- SECURITY NOTE -->
+            <section class="warning-card">
+
+                <h3>⚠ Security Note</h3>
+
+                <p>
+                    DES and 2-Key Triple DES are legacy cryptographic algorithms deprecated by NIST (SP 800-131A).
+                    3-Key Triple DES is also retired for new applications due to sweet32 block collisions (64-bit block limit).
+                    They are demonstrated here for academic and historical cryptanalysis purposes.
+                    Modern production architectures mandate <strong>AES-128 / AES-256</strong> (Advanced Encryption Standard).
+                </p>
+
+            </section>
+
+
+            <!-- REFERENCES -->
+            <section class="card" id="references">
+
+                <div class="section-heading">
+                    <span>12</span>
+                    <h3>References</h3>
+                </div>
+
+                <ul class="reference-list">
+
+                    <li>
+                        National Institute of Standards and Technology (NIST),
+                        <em>FIPS PUB 46-3: Data Encryption Standard (DES)</em>.
+                    </li>
+
+                    <li>
+                        NIST Special Publication 800-67,
+                        <em>Recommendation for the Triple Data Encryption Algorithm (TDEA) Block Cipher</em>.
+                    </li>
+
+                    <li>
+                        William Stallings,
+                        <em>Cryptography and Network Security: Principles and Practice</em>, Pearson.
+                    </li>
+
+                    <li>
+                        Behrouz A. Forouzan,
+                        <em>Cryptography and Network Security</em>, McGraw-Hill.
+                    </li>
+
+                    <li>
+                        CryptoJS Documentation and Reference Source Code.
+                    </li>
+
+                </ul>
+
+            </section>
+
+
+        </main>
     </div>
+
+
+    <!-- FOOTER -->
+    <footer>
+
+        <p>
+            DES Cryptography Virtual Laboratory • Double DES & Triple DES Experiment
+        </p>
+
+    </footer>
+
+
+    <script src="script.js"></script>
+
 </body>
 </html>
