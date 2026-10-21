@@ -1470,6 +1470,37 @@ textarea:focus {
     gap: 20px;
 }
 
+.three-column {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+}
+
+.analyzer-stats-pill {
+    background: #ffffff;
+    border: 1px solid var(--card-border);
+    border-radius: var(--inner-radius);
+    padding: 12px 14px;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.03);
+}
+
+.analyzer-stats-pill .pill-label {
+    font-size: 11px;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    font-weight: 600;
+    letter-spacing: 0.5px;
+}
+
+.analyzer-stats-pill .pill-val {
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--primary-deep);
+    margin-top: 3px;
+}
+
 .button-row {
     display: flex;
     gap: 12px;
