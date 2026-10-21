@@ -66,7 +66,8 @@
                     <li><a href="#triple-des" class="nav-link" data-tooltip="Triple DES (3-Key)"><span class="nav-num">09</span><span class="nav-text">Triple DES (3-Key)</span></a></li>
                     <li><a href="#test-cases" class="nav-link" data-tooltip="Test Cases"><span class="nav-num">10</span><span class="nav-text">Test Cases</span></a></li>
                     <li><a href="#quiz" class="nav-link" data-tooltip="Quiz"><span class="nav-num">11</span><span class="nav-text">Quiz</span></a></li>
-                    <li><a href="#references" class="nav-link" data-tooltip="References"><span class="nav-num">12</span><span class="nav-text">References</span></a></li>
+                    <li><a href="#security-comparison" class="nav-link" data-tooltip="Security Comparison"><span class="nav-num">12</span><span class="nav-text">Security Comparison</span></a></li>
+                    <li><a href="#references" class="nav-link" data-tooltip="References"><span class="nav-num">13</span><span class="nav-text">References</span></a></li>
                 </ul>
             </nav>
         </aside>
@@ -1310,7 +1311,84 @@
             </section>
 
 
-            <!-- SECURITY NOTE -->
+            <!-- DOUBLE DES VS TRIPLE DES SECURITY COMPARISON -->
+            <section class="card experiment-card" id="security-comparison">
+
+                <div class="section-heading">
+                    <span>12</span>
+                    <h3>Double DES vs Triple DES Security Comparison</h3>
+                </div>
+
+                <p class="experiment-description">
+                    Technical comparison of Double DES, 2-Key Triple DES, and 3-Key Triple DES architectures,
+                    mathematical formulations, effective security bounds, and known cryptanalytic vulnerabilities.
+                </p>
+
+                <!-- COMPARATIVE ANALYSIS MATRIX -->
+                <div class="theory-block" style="margin-top: 15px;">
+                    <h4>Architectural & Security Comparison</h4>
+                    <p>
+                        While both Double DES and Triple DES use sequential iterations of the 56-bit DES Feistel cipher,
+                        their mathematical constructions and effective security bounds differ drastically:
+                    </p>
+
+                    <div class="key-table-wrapper" style="margin-top: 12px;">
+                        <table class="key-table">
+                            <thead>
+                                <tr>
+                                    <th>Cipher Architecture</th>
+                                    <th>Nominal Key Length</th>
+                                    <th>DES Operations</th>
+                                    <th>Mathematical Formulation</th>
+                                    <th>Effective Security</th>
+                                    <th>Known Cryptanalytic Vulnerability</th>
+                                    <th>Modern NIST Status</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Double DES</strong></td>
+                                    <td>112 bits (2 &times; 56)</td>
+                                    <td>2 (E &rarr; E)</td>
+                                    <td><code>C = E(K2, E(K1, P))</code></td>
+                                    <td><strong>~2<sup>57</sup> operations</strong></td>
+                                    <td><strong>Meet-in-the-Middle (MitM):</strong> Forward table of 2<sup>56</sup> matches backward in 2<sup>56</sup> ops.</td>
+                                    <td><span style="color: var(--error-red); font-weight: bold;">Insecure / Never Standardized</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>2-Key Triple DES</strong></td>
+                                    <td>112 bits (K1, K2, K1)</td>
+                                    <td>3 (E &rarr; D &rarr; E)</td>
+                                    <td><code>C = E(K1, D(K2, E(K1, P)))</code></td>
+                                    <td><strong>~112 bits (80 bits chosen-pt)</strong></td>
+                                    <td>Vulnerable to chosen-plaintext MitM variants (Merkle-Hellman / van Oorschot-Wiener).</td>
+                                    <td><span style="color: var(--error-red); font-weight: bold;">Deprecated (NIST SP 800-131A)</span></td>
+                                </tr>
+                                <tr>
+                                    <td><strong>3-Key Triple DES</strong></td>
+                                    <td>168 bits (K1, K2, K3)</td>
+                                    <td>3 (E &rarr; D &rarr; E)</td>
+                                    <td><code>C = E(K3, D(K2, E(K1, P)))</code></td>
+                                    <td><strong>~112 bits</strong> (against MitM)</td>
+                                    <td>Sweet32 block collision attack (64-bit block limit allows collision in 2<sup>32</sup> blocks).</td>
+                                    <td><span style="color: #a37210; font-weight: bold;">Retired (NIST SP 800-67 Rev 2)</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="crypto-note" style="margin-top: 15px;">
+                        <strong>Key Takeaway for Students & Teachers:</strong>
+                        Doubling the key bits does <em>not</em> double effective security if an intermediate state can be attacked simultaneously from both ends.
+                        Triple DES provides ~112 bits of security rather than 168 bits, and its 64-bit block size makes it vulnerable to birthday-bound collisions.
+                        All modern production systems mandate <strong>AES-128 or AES-256</strong> (Advanced Encryption Standard).
+                    </div>
+                </div>
+
+            </section>
+
+
+                        <!-- SECURITY NOTE -->
             <section class="warning-card">
 
                 <h3>⚠ Security Note</h3>
@@ -1329,7 +1407,7 @@
             <section class="card" id="references">
 
                 <div class="section-heading">
-                    <span>12</span>
+                    <span>13</span>
                     <h3>References</h3>
                 </div>
 

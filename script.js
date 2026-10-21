@@ -556,8 +556,8 @@ const QUIZ_QUESTIONS = [
             "The receiver will obtain the bitwise complement of the plaintext due to DES complementation properties.",
             "Decryption will succeed if and only if K1 ⊕ K2 ⊕ K3 = 0."
         ],
-        correct: 1,
-        explanation: "Block cipher operations with distinct keys do not commute: E(Ka, E(Kb, P)) ≠ E(Kb, E(Ka, P)). Reversing or swapping keys applies cryptographic operations out of order, resulting in an uninvertible transformation that outputs unintelligible pseudorandom noise."
+        correct: 0,
+        explanation: "Decryption in Triple DES reverses the encryption stages: using the key sequence (K3, K2, K1) in reverse order successfully decrypts intermediate stages to recover the original plaintext P."
     },
     {
         id: "q4",
@@ -587,29 +587,29 @@ const QUIZ_QUESTIONS = [
     },
     {
         id: "q6",
-        title: "6. S-Box Output Lookup & Binary Conversion",
-        prompt: "Using authentic DES S-box S1, where Row 2 at Column 6 contains the decimal entry 2, what is the resulting 4-bit output binary block?",
+        title: "6. Total S-Box Output",
+        prompt: "During the substitution phase of a DES round, the 48-bit mixed data is divided into smaller blocks and fed into multiple S-boxes operating in parallel. How many S-boxes are there, and what is the total combined size of their output before it goes to the P-box?",
         options: [
-            "0010",
-            "0100",
-            "0110",
-            "0001"
+            "8 S-boxes producing a combined 32-bit output.",
+            "16 S-boxes producing a combined 64-bit output.",
+            "4 S-boxes producing a combined 16-bit output.",
+            "8 S-boxes producing a combined 48-bit output."
         ],
         correct: 0,
-        explanation: "Looking up Row 2, Column 6 in S-box 1 gives the decimal value 2. Converting decimal 2 into a 4-bit binary vector yields '0010' (0·8 + 0·4 + 1·2 + 0·1 = 2)."
+        explanation: "The 48-bit input is split into eight separate 6-bit chunks. Each of these chunks is processed by one of the 8 distinct S-boxes (S1 through S8). Since each S-box outputs 4 bits, the combined output of all 8 S-boxes is exactly 32 bits (8 × 4 = 32), which is then passed to the Permutation box (P-box)."
     },
     {
         id: "q7",
-        title: "7. S-Box Output Vector to Decimal Conversion",
-        prompt: "If an S-box lookup returns the 4-bit binary block '1101', what is its corresponding decimal value?",
+        title: "7. S-Box Row Permutation Property",
+        prompt: "If you fix the outer two bits of the 6-bit input to a specific DES S-box (effectively locking it to a single row) and iterate through all 16 possible combinations of the inner four bits, what is guaranteed about the resulting 16 outputs?",
         options: [
-            "11",
-            "12",
-            "13",
-            "14"
+            "The outputs will be a random distribution of 4-bit values, where some values may appear multiple times.",
+            "The outputs will contain exactly the integers 0 through 15 with absolutely no duplicates.",
+            "The outputs will always result in an even parity for each 4-bit block.",
+            "The outputs will expand the data size to compensate for the initial compression."
         ],
-        correct: 2,
-        explanation: "Binary '1101' converts to decimal as: 1·2³ + 1·2² + 0·2¹ + 1·2⁰ = 8 + 4 + 0 + 1 = 13."
+        correct: 1,
+        explanation: "A fundamental structural rule of the DES S-boxes is that each of the four rows within an S-box acts as a strict mathematical permutation of the integers 0 through 15. This means that for any given row, every possible 4-bit output appears exactly once. This design ensures that no two distinct 6-bit inputs can produce the same 4-bit output if they share the same outer bits."
     },
     {
         id: "q8",
